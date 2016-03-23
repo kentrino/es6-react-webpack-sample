@@ -1,5 +1,12 @@
+# Node.js
+npm-debug.log
 node_modules
+
+# Mac
 .DS_Store
+
+# Intellij Files
+.idea
 
 dist
 !dist/index.html

@@ -1,29 +1,31 @@
-var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var path = require('path');
+/* eslint strict: 0 */
+'use strict';
 
-var parseFlag = function (flagString) {
-  var flagFound = false;
-  for( i in process.argv ){
-    if( process.argv[i] === '--' + flagString ){
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+
+const parseFlag = flagString => {
+  let flagFound = false;
+  for (let arg of process.argv) {
+    if (arg === `--${flagString}`) {
       flagFound = true;
     } 
   }
   return flagFound;
-}
-
+};
 
 // use direnv
-var DEVELOPMENT = process.env.NODE_ENV === 'development';
+const DEVELOPMENT = process.env.NODE_ENV === 'development';
 
-var MINIFY = !DEVELOPMENT;
+const MINIFY = !DEVELOPMENT;
 
 // Setup plugins
-var extractCSS = new ExtractTextPlugin('css/bundle.css');
-var plugins = [
+const extractCSS = new ExtractTextPlugin('css/bundle.css');
+let plugins = [
   extractCSS
 ];
-if( MINIFY ){
+if (MINIFY) {
   plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       compress: {warnings: false}  
@@ -36,7 +38,7 @@ module.exports = {
     'js/bundle': './src/index.js'
   },
   output: {
-    path: "./dist",
+    path: './dist',
     filename: MINIFY ? '[name].min.js' : '[name].js'
   },
   devtool: DEVELOPMENT ? 'inline-source-map' : null,  
@@ -45,7 +47,14 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   module: {
-    loaders: [
+    preLoaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader'
+      }
+    ],
+    loaders: [
       {
         test: /.jsx?$/,
         loader: 'babel-loader',
@@ -56,13 +65,13 @@ module.exports = {
       },
       { 
         test: /\.css$/,
-        loader : extractCSS.extract('style-loader', 'css-loader', {
+        loader: extractCSS.extract('style-loader', 'css-loader', {
           publicPath: '../'
         })
       },
       {
         test: /\.scss$/,
-        loader: extractCSS.extract("style-loader", "css-loader!sass-loader", {
+        loader: extractCSS.extract('style-loader', 'css-loader!sass-loader', {
           publicPath: '../'
         })
       },
@@ -83,6 +92,9 @@ module.exports = {
         }
       }
     ]
-  },
-  plugins: plugins
+  },
+  eslint: {
+    configFile: '.eslintrc'
+  },
+  plugins
 };
