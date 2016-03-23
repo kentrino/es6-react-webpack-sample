@@ -1,5 +1,4 @@
 import React from 'react';
-import update from 'react-addons-update'
 import ReactDOM from 'react-dom';
 import {Button} from 'react-bootstrap';
 import Icon from 'react-fa';
@@ -9,32 +8,28 @@ import '../../css/components/list.scss';
 export default class List extends React.Component {
   constructor(props) {
     super(props)
-    this.removeItem = this.removeItem.bind(this);
     
     this.state = {
-      items: {
-        "hoge": {name: "ホゲ", deleted: false},
-        "hige": {name: "ひげ", deleted: false}
-      }
+      items: [
+        {id: 'fuga', name: "ふが"},
+        {id: 'hoge', name: "ホゲ"},
+        {id: 'hige', name: "ひげ"}
+      ]
     };
   }
   
-  removeItem (key) {
+  removeItem (id) {
     if( !confirm("本当に削除しますか？") ){
        return
     }
-    var forUpdate = { items: {} }
-    forUpdate.items[key] = {deleted: {$set: true}};
-    var newState = update(this.state, forUpdate);
-    this.setState(newState);
+    this.setState({items: this.state.items.filter(v => v.id !== id)});
   }
 
   render() {
     var items = [];
-    for( var key in this.state.items ){
-      if( !this.state.items[key].deleted ){
-        items.push((<ListItem key={key} id={key} onRemoveClicked={this.removeItem} content={this.state.items[key].name}/>));
-      }
+    for( var i in this.state.items ){
+      var item = this.state.items[i];
+      items.push((<ListItem key={item.id} id={item.id} onRemoveClicked={(id) => this.removeItem(id)} content={item.name}/>));
     }
     return <table className="list table">
       <thead>
@@ -65,7 +60,7 @@ class ListItem extends React.Component {
   }
   
   render() {
-    var removeButton = (<Button bsSize="xsmall" bsStyle="danger" onClick={this.onRemoveClicked.bind(this)}>
+    var removeButton = (<Button bsSize="xsmall" bsStyle="danger" onClick={(e) => this.onRemoveClicked(e)}>
       <Icon name="remove" />
     </Button>);
     
