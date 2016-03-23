@@ -7,10 +7,10 @@ const path = require('path');
 
 const parseFlag = flagString => {
   let flagFound = false;
-  for (let arg of process.argv) {
+  for (const arg of process.argv) {
     if (arg === `--${flagString}`) {
       flagFound = true;
-    } 
+    }
   }
   return flagFound;
 };
@@ -22,13 +22,13 @@ const MINIFY = !DEVELOPMENT;
 
 // Setup plugins
 const extractCSS = new ExtractTextPlugin('css/bundle.css');
-let plugins = [
+const plugins = [
   extractCSS
 ];
 if (MINIFY) {
   plugins.push(
     new webpack.optimize.UglifyJsPlugin({
-      compress: {warnings: false}  
+      compress: {warnings: false}
     })
   );
 }
@@ -41,7 +41,7 @@ module.exports = {
     path: './dist',
     filename: MINIFY ? '[name].min.js' : '[name].js'
   },
-  devtool: DEVELOPMENT ? 'inline-source-map' : null,  
+  devtool: DEVELOPMENT ? 'inline-source-map' : null,
   resolve: {
     root: path.join(__dirname, 'src'),
     extensions: ['', '.js', '.jsx']
@@ -63,7 +63,7 @@ module.exports = {
           presets: ['es2015', 'react']
         }
       },
-      { 
+      {
         test: /\.css$/,
         loader: extractCSS.extract('style-loader', 'css-loader', {
           publicPath: '../'

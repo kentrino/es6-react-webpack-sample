@@ -27,8 +27,8 @@ export default class List extends React.Component {
   }
 
   render() {
-    let items = [];
-    for (let item of this.state.items) {
+    const items = [];
+    for (const item of this.state.items) {
       items.push((<ListItem key={item.id} id={item.id}
         onRemoveClicked={id => this.removeItem(id)} content={item.name}
       />));
@@ -58,7 +58,7 @@ class ListItem extends React.Component {
   }
 
   render() {
-    let removeButton = (
+    const removeButton = (
       <Button
         bsSize="xsmall" bsStyle="danger"
         onClick={e => this.onRemoveClicked(e)}
