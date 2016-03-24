@@ -7,7 +7,6 @@
   "ecmaFeatures": {
     "jsx": true
   },
-  "parser": "babel-eslint",
   "plugins": [
     "react",
     "babel"
@@ -22,11 +21,10 @@
     "react/jsx-boolean-value": 2,
     "react/jsx-no-duplicate-props": 2,
     "react/prop-types": [2, { "ignore": [
-        "children",
-        "className",
-        "style"
-        ]
-    }],
+      "children",
+      "className",
+      "style"
+    ]}],
     // Google
     "comma-dangle": [2, "never"],
     "arrow-parens": [2, "as-needed"],
