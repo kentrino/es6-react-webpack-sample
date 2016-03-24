@@ -3,6 +3,7 @@
 
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const SassLintPlugin = require('sasslint-webpack-plugin');
 const path = require('path');
 
 const parseFlag = flagString => {
@@ -23,7 +24,9 @@ const MINIFY = !DEVELOPMENT;
 // Setup plugins
 const extractCSS = new ExtractTextPlugin('css/bundle.css');
 const plugins = [
-  extractCSS
+  extractCSS,
+  new SassLintPlugin({
+    context: './src/css'})
 ];
 if (MINIFY) {
   plugins.push(
