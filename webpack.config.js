@@ -26,7 +26,9 @@ const extractCSS = new ExtractTextPlugin('css/bundle.css');
 const plugins = [
   extractCSS,
   new SassLintPlugin({
-    context: './src/css'})
+    ignorePlugins: 'extract-text-webpack-plugin',
+    context: './src/css'
+  })
 ];
 if (MINIFY) {
   plugins.push(
@@ -37,6 +39,8 @@ if (MINIFY) {
 }
 
 module.exports = {
+  // avoid redundant stats from extract-text-plugin
+  stats: {children: false},
   entry: {
     'js/bundle': './src/index.js'
   },
