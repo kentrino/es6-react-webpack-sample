@@ -35,7 +35,7 @@
     "node-sass": "^3.4.2",
     "sass-lint": "^1.5.1",
     "sass-loader": "^3.2.0",
-    "sasslint-webpack-plugin": "git@github.com:kentrino/sasslint-webpack-plugin.git",
+    "sasslint-webpack-plugin": "https://github.com/kentrino/sasslint-webpack-plugin.git",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14"
